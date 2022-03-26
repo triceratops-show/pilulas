@@ -1,0 +1,36 @@
+
+// Global
+//@font-face {
+//  font-family: ComicZine;
+//  src: url(/comic_zine_ot.otf);
+//  font-display: swap;
+//}
+
+.test {
+/*  width: 150px; */
+}
+
+.cover {
+  max-width: 30%;
+  transform-origin: top left;
+  z-index: 999;
+}
+
+.coverFull {
+  position: absolute;
+}
+
+// leading-tight font-extrabold text-gray-700
+.title {
+  color: white;
+//  box-shadow: 10px 0 0px 0px #EDC330, -10px 0 0px 0px #EDC330;
+//  background: #ffbc6b;
+//  padding: 0 15px;
+//  font-family: ComicZine;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 1.5rem;
+ // text-align: center;
+}
+

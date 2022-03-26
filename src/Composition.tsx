@@ -83,6 +83,52 @@ export const AudiogramComposition = () => {
         >
           <AudioViz />
         </div>
+        <div
+          className="mt-2 text-2xl font-semibold"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            color: "white",
+            ["z-index"]: 999,
+          }}
+        >
+          <PaginatedSubtitles
+            src={subtitlesSource}
+            startFrame={offset}
+            endFrame={offset + durationInFrames}
+            linesPerPage={4}
+            renderSubtitleItem={(item, frame) => (
+              <>
+                <span
+                  style={{
+                    backfaceVisibility: "hidden",
+                    display: "inline-block",
+
+                    opacity: interpolate(
+                      frame,
+                      [item.start, item.start + 15],
+                      [0, 1],
+                      { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+                    ),
+                    transform: `perspective(1000px) translateY(${interpolate(
+                      frame,
+                      [item.start, item.start + 15],
+                      [0.5, 0],
+                      {
+                        easing: Easing.out(Easing.quad),
+                        extrapolateLeft: "clamp",
+                        extrapolateRight: "clamp",
+                      }
+                    )}em)`,
+                  }}
+                >
+                  {item.text}
+                </span>{" "}
+              </>
+            )}
+          />
+        </div>
       </div>
       {/*
       <div
