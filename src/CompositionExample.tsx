@@ -8,7 +8,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import audioSource from "./assets/audio.mp3";
+//import audioSource from "./assets/audio.mp3";
 import coverImg from "./assets/cover.jpg";
 import gridImg from "./assets/grid.png";
 import subtitlesSource from "./assets/subtitles.srt";
