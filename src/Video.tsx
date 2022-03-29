@@ -11,9 +11,10 @@ import ep30audio from "./assets/episodio-30/pirula-3-estragando-show-dos-amigos.
 import ep30subtitles from "./assets/episodio-30/pilula-3.srt";
 import { continueRender, staticFile, delayRender } from "remotion";
 import { getAudioDuration } from "@remotion/media-utils";
-import { Template1 as Divulgacao } from "./Divulgacao";
+import { Template1 } from "./Divulgacao";
 import loSiento from "./assets/losiento.mp3";
 import ep31Cover from "./assets/episodio-31/cover.png";
+import ep31image from "./assets/episodio-31/justine1.jpg";
 
 const fps = 30;
 //const durationInFrames = 30 * fps;
@@ -79,13 +80,18 @@ export const RemotionVideo: React.FC = () => {
         width={1080}
         height={1080}
       />
+
       <Composition
-        id="Divulgacao"
-        component={Divulgacao}
+        id="Template1"
+        component={Template1}
         defaultProps={{
-          audio: loSiento,
+          startPhotoAt: 0,
+          startCoverAt: 100,
+          startAudioFrom: 7500,
+          startFadeOutFromLastNSeconds: 6,
+          audio: "https://www.triceratops.show/episodios/episodio-31.mp3",
           cover: ep31Cover,
-          sources: ["assets/episodio-31/justine1.jpg"],
+          image: "https://i.ytimg.com/vi/e2OY5HMY3-w/maxresdefault.jpg",
         }}
         durationInFrames={Math.round(13 * fps)}
         fps={fps}
