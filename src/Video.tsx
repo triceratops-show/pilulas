@@ -1,4 +1,4 @@
-import { Composition } from "remotion";
+import { Composition, staticFile } from "remotion";
 import { AudiogramComposition } from "./Composition";
 import { AudiogramComposition as PilulaComImagem } from "./PilulaComImagem";
 import "./fonts.css";
@@ -7,6 +7,7 @@ import ep30subtitles from "./assets/episodio-30/pilula-3.srt";
 import { Template1 } from "./Template1";
 import { Template2 } from "./Template2";
 import { Template3 } from "./Template3";
+import { QualEAMusica } from "./QualEAMusica";
 
 //import ep32Cover from "https://www.triceratops.show/episodios/episodio-32.jpg";
 //import ep32image from "https://www.triceratops.show/episodios/episodio-32.mp3";
@@ -19,6 +20,18 @@ const durationInFrames = 18 * fps;
 export const RemotionVideo: React.FC = () => {
   return (
     <>
+      <Composition
+        id="QualEAMusica"
+        component={QualEAMusica}
+        durationInFrames={18 * fps}
+        fps={fps}
+        defaultProps={{
+          audio: staticFile("/Shocking_Blue-Love-Buzz.mp3"),
+          startAudioFrom: fps * 0,
+        }}
+        width={1080}
+        height={1080}
+      />
       <Composition
         id="PilulaComImagem"
         component={PilulaComImagem}
