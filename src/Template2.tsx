@@ -17,33 +17,29 @@ export const Template2: React.FC<{
   audio: string;
   cover: string;
 
-  /** what timestamp to start the photo animation from, in seconds */
-  startPhotoAt: number;
-
   /** what timestamp to start the cover animation from, in miliseconds */
   startCoverAt: number;
 
   /** what timestamp to start the AUDIO from, in seconds */
   startAudioFrom: number;
 
+  /** most likely the epidode's title */
   episodeText: string;
 
   /** how many seconds should the fade out start from */
-  startFadeOutFromLastNSeconds: number;
+  startFadeOutFromLastNSeconds?: number;
 }> = ({
   image,
   audio,
   cover,
-  startPhotoAt,
   startCoverAt,
   startAudioFrom,
-  startFadeOutFromLastNSeconds,
+  startFadeOutFromLastNSeconds = 3,
   episodeText,
 }) => {
-  const { height, fps, durationInFrames } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
-  const startPhoto = startPhotoAt * fps;
   const opacity = interpolate(
     frame,
     [startCoverAt, startCoverAt + fps * 2],
@@ -94,10 +90,7 @@ export const Template2: React.FC<{
         </div>
       </Sequence>
 
-      <Sequence
-        durationInFrames={Infinity}
-        from={startPhoto + (textFor + textFor / 2)}
-      >
+      <Sequence durationInFrames={Infinity} from={textFor + textFor / 2}>
         <FourFaces image={image} />
       </Sequence>
       <Sequence durationInFrames={Infinity} from={startCoverAt}>
