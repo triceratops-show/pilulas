@@ -1,6 +1,5 @@
 import React from "react";
 import cx from "classnames";
-import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import {
   Audio,
   Easing,
@@ -10,6 +9,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import { PaginatedSubtitles } from "./Subtitles";
 import styles from "./Template3.module.scss";
 
@@ -64,7 +64,7 @@ interface PilulaComCapaProps {
   /** what timestamp to start the AUDIO from, in seconds */
   startAudioFrom: number;
 }
-export const Template3: React.FC<PilulaComCapaProps> = ({
+export const Template3Composition: React.FC<PilulaComCapaProps> = ({
   cover,
   title,
   subtitles,

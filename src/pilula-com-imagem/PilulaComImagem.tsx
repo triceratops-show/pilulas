@@ -1,4 +1,3 @@
-import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import {
   Audio,
   Easing,
@@ -8,11 +7,20 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-//import audioSource from "./assets/audio.mp3";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
+import { PaginatedSubtitles } from "./Subtitles";
+
+import audioSource from "./assets/audio.mp3";
 import coverImg from "./assets/cover.jpg";
 import gridImg from "./assets/grid.png";
 import subtitlesSource from "./assets/subtitles.srt";
-import { PaginatedSubtitles } from "./Subtitles";
+
+// Propriedades interessantes
+// Nome do arquivo de áudio
+// Nome do episódio
+// Capa do episódio
+// Intervalo
+// Título
 
 const AudioViz = () => {
   const frame = useCurrentFrame();
@@ -52,7 +60,7 @@ const AudioViz = () => {
   );
 };
 
-export const AudiogramComposition = () => {
+export const PilulaComImagemComposition = () => {
   const { durationInFrames } = useVideoConfig();
 
   // change this to adjust the part of the audio to use
@@ -62,6 +70,21 @@ export const AudiogramComposition = () => {
   return (
     <Sequence from={-offset}>
       <Audio src={audioSource} />
+
+      <div style={{ width: "100%", position: "relative", background: "white" }}>
+        <Img style={{ ["z-index"]: "1", position: "absolute" }} src={gridImg} />
+        <div
+          style={{
+            position: "absolute",
+            top: "55%",
+            left: "50%",
+            transform: "translate(-50%, -50%) scaleX(-51%)",
+          }}
+        >
+          <AudioViz />
+        </div>
+      </div>
+      {/*
       <div
         className="flex flex-col w-full h-full text-white p-4 bg-black"
         style={{
@@ -77,9 +100,11 @@ export const AudiogramComposition = () => {
           </div>
         </div>
 
+
         <div className="mt-4">
           <AudioViz />
         </div>
+
 
         <div className="mt-2 text-2xl font-semibold">
           <PaginatedSubtitles
@@ -119,6 +144,7 @@ export const AudiogramComposition = () => {
           />
         </div>
       </div>
+      */}
     </Sequence>
   );
 };

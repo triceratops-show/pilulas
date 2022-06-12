@@ -9,13 +9,15 @@ import {
   useCurrentFrame,
 } from "remotion";
 import { FourFaces } from "./FourFaces";
-import styles from "./Template2.module.scss";
-import "./load-fonts";
+import { Gradient } from "./Gradient";
 
-export const Template2: React.FC<{
+export const CapaFourFacesComposition: React.FC<{
   image: string;
   audio: string;
   cover: string;
+
+  /** what timestamp to start the photo animation from, in seconds */
+  startPhotoAt: number;
 
   /** what timestamp to start the cover animation from, in miliseconds */
   startCoverAt: number;
@@ -23,30 +25,28 @@ export const Template2: React.FC<{
   /** what timestamp to start the AUDIO from, in seconds */
   startAudioFrom: number;
 
-  /** most likely the epidode's title */
-  episodeText: string;
-
   /** how many seconds should the fade out start from */
-  startFadeOutFromLastNSeconds?: number;
+  startFadeOutFromLastNSeconds: number;
 }> = ({
   image,
   audio,
   cover,
+  startPhotoAt,
   startCoverAt,
   startAudioFrom,
-  startFadeOutFromLastNSeconds = 3,
-  episodeText,
+  startFadeOutFromLastNSeconds,
 }) => {
-  const { fps, durationInFrames } = useVideoConfig();
+  const { height, fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
+  const startPhoto = startPhotoAt * fps;
   const opacity = interpolate(
     frame,
     [startCoverAt, startCoverAt + fps * 2],
     [0, 1]
   );
 
-  const progressCover = spring({
+  const progress = spring({
     frame: frame - startCoverAt,
     fps,
     from: 0,
@@ -57,16 +57,10 @@ export const Template2: React.FC<{
     },
   });
 
-  const textFor = fps * 3;
   const volume = interpolate(
     frame,
-    [
-      0,
-      textFor,
-      durationInFrames - fps * startFadeOutFromLastNSeconds,
-      durationInFrames,
-    ],
-    [0, 1, 1, 0],
+    [durationInFrames - fps * startFadeOutFromLastNSeconds, durationInFrames],
+    [1, 0],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
@@ -76,29 +70,18 @@ export const Template2: React.FC<{
   return (
     <AbsoluteFill>
       <Audio src={audio} startFrom={startAudioFrom} volume={volume} />
-      <div className={styles.blackBackground}></div>
-      <Sequence durationInFrames={textFor / 2} from={0}>
-        <div className={styles.thisWeekWrapper}>
-          <h1 className={styles.thisWeek}>
-            Essa semana em tricerátops show...
-          </h1>
-        </div>
-      </Sequence>
-      <Sequence durationInFrames={textFor} from={textFor / 2}>
-        <div className={styles.thisWeekWrapper}>
-          <h1 className={styles.thisWeek}>{episodeText}</h1>
-        </div>
-      </Sequence>
-
-      <Sequence durationInFrames={Infinity} from={textFor + textFor / 2}>
+      <Gradient height={height} />
+      return (
+      <Sequence durationInFrames={Infinity} from={startPhoto}>
         <FourFaces image={image} />
       </Sequence>
+      );
       <Sequence durationInFrames={Infinity} from={startCoverAt}>
         <Img
           src={cover}
           style={{
             opacity,
-            transform: `scale(${progressCover})`,
+            transform: `scale(${progress})`,
           }}
         />
       </Sequence>

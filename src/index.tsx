@@ -1,6 +1,10 @@
-import { registerRoot } from "remotion";
+import {
+  registerRoot,
+  continueRender,
+  staticFile,
+  delayRender,
+} from "remotion";
 import { RemotionVideo } from "./Video";
-import { continueRender, staticFile, delayRender } from "remotion";
 
 function loadFont() {
   const waitForFont = delayRender();
@@ -18,6 +22,7 @@ function loadFont() {
     })
     .catch((err) => console.log("Error loading font", err));
 }
+
 function init() {
   //  loadFont();
   registerRoot(RemotionVideo);

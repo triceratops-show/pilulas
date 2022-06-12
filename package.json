@@ -1,16 +1,21 @@
 {
   "name": "pilulas",
+  "description": "Generate video clips for social media",
   "version": "1.0.0",
-  "description": "My Remotion video",
-  "scripts": {
-    "start": "remotion preview src/index.tsx",
-    "remotion": "remotion",
-    "build": "remotion render src/index.tsx Template1 out/video.mp4",
-    "upgrade": "remotion upgrade",
-    "test": "eslint src --ext ts,tsx,js,jsx && tsc"
+  "private": true,
+  "author": "Tricerátops Show",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/triceratops-show/pilulas"
   },
-  "repository": {},
-  "license": "UNLICENSED",
+  "scripts": {
+    "build": "remotion render src/index.tsx Template1 out/video.mp4",
+    "remotion": "remotion",
+    "start": "remotion preview src/index.tsx",
+    "test": "eslint src --ext ts,tsx,js,jsx && tsc",
+    "upgrade": "remotion upgrade"
+  },
   "dependencies": {
     "@remotion/bundler": "^2.6.12",
     "@remotion/cli": "^2.6.12",

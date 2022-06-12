@@ -1,16 +1,14 @@
-import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import React from "react";
 import {
   Audio,
-  Easing,
   Img,
-  interpolate,
   Sequence,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import gridImg from "./assets/qual-a-musica-grid.png";
+import { useAudioData, visualizeAudio } from "@remotion/media-utils";
 import styles from "./QualEAMusica.module.scss";
+import gridImg from "./qual-a-musica-grid.png";
 
 // Propriedades interessantes
 // Nome do arquivo de áudio

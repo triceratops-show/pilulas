@@ -1,14 +1,13 @@
 import { Composition, staticFile } from "remotion";
-import { AudiogramComposition } from "./Composition";
-import { AudiogramComposition as PilulaComImagem } from "./PilulaComImagem";
-import "./fonts.css";
 import "./style.css";
-import ep30subtitles from "./assets/episodio-30/pilula-3.srt";
-import { Template1 } from "./Template1";
-import { Template2 } from "./Template2";
-import { Template3 } from "./Template3";
-import { QualEAMusica } from "./QualEAMusica";
+import { AudiogramaComposition } from "./audiograma/Audiograma";
+import { CapaFourFacesComposition } from "./capa-four-faces/CapaFourFaces";
+import { PilulaComImagemComposition } from "./pilula-com-imagem/PilulaComImagem";
+import { QualEAMusicaComposition } from "./qual-e-a-musica/QualEAMusica";
+import { Template2Composition } from "./template-2/Template2";
+import { Template3Composition } from "./template-3/Template3";
 
+import ep30subtitles from "./assets/episodio-30/pilula-3.srt";
 //import ep32Cover from "https://www.triceratops.show/episodios/episodio-32.jpg";
 //import ep32image from "https://www.triceratops.show/episodios/episodio-32.mp3";
 //import ep31Cover from "./assets/episodio-31/cover.png";
@@ -21,37 +20,16 @@ export const RemotionVideo: React.FC = () => {
   return (
     <>
       <Composition
-        id="QualEAMusica"
-        component={QualEAMusica}
-        durationInFrames={18 * fps}
-        fps={fps}
-        defaultProps={{
-          audio: staticFile("/Shocking_Blue-Love-Buzz.mp3"),
-          startAudioFrom: fps * 0,
-        }}
-        width={1080}
-        height={1080}
-      />
-      <Composition
-        id="PilulaComImagem"
-        component={PilulaComImagem}
+        id="Audiograma"
+        component={AudiogramaComposition}
         durationInFrames={durationInFrames}
         fps={fps}
         width={1080}
         height={1080}
       />
       <Composition
-        id="Audiogram"
-        component={AudiogramComposition}
-        durationInFrames={durationInFrames}
-        fps={fps}
-        width={1080}
-        height={1080}
-      />
-
-      <Composition
-        id="Template1"
-        component={Template1}
+        id="CapaFourFaces"
+        component={CapaFourFacesComposition}
         defaultProps={{
           startPhotoAt: 0,
           startCoverAt: fps * 9,
@@ -68,8 +46,28 @@ export const RemotionVideo: React.FC = () => {
         height={1080}
       />
       <Composition
+        id="PilulaComImagem"
+        component={PilulaComImagemComposition}
+        durationInFrames={durationInFrames}
+        fps={fps}
+        width={1080}
+        height={1080}
+      />
+      {/* <Composition
+        id="QualEAMusica"
+        component={QualEAMusicaComposition}
+        fps={fps}
+        durationInFrames={18 * fps}
+        width={1080}
+        height={1080}
+        defaultProps={{
+          audio: staticFile("/Shocking_Blue-Love-Buzz.mp3"),
+          startAudioFrom: fps * 0,
+        }}
+      /> */}
+      <Composition
         id="Template2"
-        component={Template2}
+        component={Template2Composition}
         defaultProps={{
           startCoverAt: fps * 9,
           startAudioFrom: fps * 70,
@@ -84,10 +82,9 @@ export const RemotionVideo: React.FC = () => {
         width={1080}
         height={1080}
       />
-
       <Composition
         id="Template3"
-        component={Template3}
+        component={Template3Composition}
         defaultProps={{
           audio: "https://www.triceratops.show/episodios/episodio-32.mp3",
           startAudioFrom: fps * 800,
