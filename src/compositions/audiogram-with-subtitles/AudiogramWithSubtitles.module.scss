@@ -1,0 +1,18 @@
+.cover {
+  max-width: 30%;
+  transform-origin: top left;
+  z-index: 999;
+}
+
+.coverFull {
+  position: absolute;
+}
+
+// leading-tight font-extrabold text-gray-700
+.title {
+  color: white;
+  font-family: ComicZine;
+  font-weight: 500;
+  font-size: 2rem;
+}
+

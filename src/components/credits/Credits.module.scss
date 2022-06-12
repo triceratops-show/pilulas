@@ -1,0 +1,36 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem 1.5rem;
+
+  background-color: black;
+  color: white;
+
+  &[data-font="joan"] {
+    font-family: 'Joan', sans-serif;
+  }
+
+  &[data-font="walrus"] {
+    font-family: 'Walrus', sans-serif;
+  }
+}
+
+.img {
+  width: 60%;
+  margin-block-end: 0.5rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.125rem;
+  padding-block-end: 0.5rem;
+}
+
+.social {
+  text-align: center;
+}

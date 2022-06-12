@@ -1,104 +1,141 @@
-import { Composition, staticFile } from "remotion";
-import { AudiogramComposition } from "./Composition";
-import { AudiogramComposition as PilulaComImagem } from "./PilulaComImagem";
-import "./fonts.css";
-import "./style.css";
-import ep30subtitles from "./assets/episodio-30/pilula-3.srt";
-import { Template1 } from "./Template1";
-import { Template2 } from "./Template2";
-import { Template3 } from "./Template3";
-import { QualEAMusica } from "./QualEAMusica";
+import { Composition, Still } from "remotion";
 
-//import ep32Cover from "https://www.triceratops.show/episodios/episodio-32.jpg";
-//import ep32image from "https://www.triceratops.show/episodios/episodio-32.mp3";
-//import ep31Cover from "./assets/episodio-31/cover.png";
-//import ep31image from "./assets/episodio-31/justine1.jpg";
+import "./style.css";
+
+import { Audiogram } from "./compositions/audiogram/Audiogram";
+import {
+  durationInSeconds as durationInSecondsAudiogram,
+  defaultProps as defaultPropsAudiogram,
+} from "./compositions/audiogram/example";
+
+import { QualEAMusica } from "./compositions/qual-e-a-musica/QualEAMusica";
+import {
+  durationInSeconds as durationInSecondsQEAM,
+  defaultProps as defaultPropsQEAM,
+} from "./compositions/qual-e-a-musica/example";
+
+import { AudiogramWithSubtitles } from "./compositions/audiogram-with-subtitles/AudiogramWithSubtitles";
+import {
+  durationInSeconds as durationInSecondsAudiogramWithSubtitles,
+  defaultProps as defaultPropsAudiogramWithSubtitles,
+} from "./compositions/audiogram-with-subtitles/example";
+
+import { FourFacesFadeIn } from "./compositions/four-faces-fadein/FourFacesFadeIn";
+import {
+  durationInSeconds as durationInSecondsFFFI,
+  defaultProps as defaultPropsFFFI,
+} from "./compositions/four-faces-fadein/example";
+
+import { FourFacesFadeInWithIntro } from "./compositions/four-faces-fadein-with-intro/FourFacesFadeInWithIntro";
+import {
+  durationInSeconds as durationInSecondsFFFIWI,
+  defaultProps as defaultPropsFFFIWI,
+} from "./compositions/four-faces-fadein-with-intro/example";
+
+import { ImgWithAudio } from "./compositions/img-with-audio/ImgWithAudio";
+import {
+  durationInSeconds as durationInSecondsImgWithAudio,
+  defaultProps as defaultPropsImgWithAudio,
+} from "./compositions/img-with-audio/example";
+
+import { VideoWithText } from "./compositions/video-with-text/VideoWithText";
+import {
+  durationInSeconds as durationInSecondsVideoWithText,
+  defaultProps as defaultPropsVideoWithText,
+} from "./compositions/video-with-text/example";
+
+import { VideoWithCoverCredits } from "./compositions/video-with-cover-credits/VideoWithCoverCredits";
+import {
+  durationInSeconds as durationInSecondsVWCC,
+  defaultProps as defaultPropsVWCC,
+} from "./compositions/video-with-cover-credits/example";
+
+import { CarouselImg } from "./components/carousel-img/CarouselImg";
+import { defaultProps as defaultPropsCarouselImg } from "./components/carousel-img/example";
 
 const fps = 30;
-const durationInFrames = 18 * fps;
 
 export const RemotionVideo: React.FC = () => {
   return (
     <>
       <Composition
+        id="Audiogram"
+        component={Audiogram}
+        fps={fps}
+        width={1080}
+        height={1080}
+        durationInFrames={durationInSecondsAudiogram * fps}
+        defaultProps={defaultPropsAudiogram}
+      />
+      <Composition
         id="QualEAMusica"
         component={QualEAMusica}
-        durationInFrames={18 * fps}
         fps={fps}
-        defaultProps={{
-          audio: staticFile("/Shocking_Blue-Love-Buzz.mp3"),
-          startAudioFrom: fps * 0,
-        }}
         width={1080}
         height={1080}
+        durationInFrames={durationInSecondsQEAM * fps}
+        defaultProps={defaultPropsQEAM}
       />
       <Composition
-        id="PilulaComImagem"
-        component={PilulaComImagem}
-        durationInFrames={durationInFrames}
+        id="AudiogramWithSubtitles"
+        component={AudiogramWithSubtitles}
         fps={fps}
         width={1080}
         height={1080}
+        durationInFrames={durationInSecondsAudiogramWithSubtitles}
+        defaultProps={defaultPropsAudiogramWithSubtitles}
       />
       <Composition
-        id="Audiogram"
-        component={AudiogramComposition}
-        durationInFrames={durationInFrames}
+        id="FourFacesFadeIn"
+        component={FourFacesFadeIn}
         fps={fps}
         width={1080}
         height={1080}
-      />
-
-      <Composition
-        id="Template1"
-        component={Template1}
-        defaultProps={{
-          startPhotoAt: 0,
-          startCoverAt: fps * 9,
-          startAudioFrom: fps * 70,
-          startFadeOutFromLastNSeconds: 3,
-          audio: "https://www.triceratops.show/episodios/episodio-32.mp3",
-          cover: "https://www.triceratops.show/episodios/episodio-32.jpg",
-          image:
-            "https://blognroll.com.br/wp-content/uploads/2022/03/kraftwerk.jpg",
-        }}
-        durationInFrames={Math.round(16 * fps)}
-        fps={fps}
-        width={1080}
-        height={1080}
+        durationInFrames={durationInSecondsFFFI * fps}
+        defaultProps={defaultPropsFFFI}
       />
       <Composition
-        id="Template2"
-        component={Template2}
-        defaultProps={{
-          startCoverAt: fps * 9,
-          startAudioFrom: fps * 70,
-          episodeText: "#32 Um Tributo Brasileiro ao Kraftwerk",
-          audio: "https://www.triceratops.show/episodios/episodio-32.mp3",
-          cover: "https://www.triceratops.show/episodios/episodio-32.jpg",
-          image:
-            "https://blognroll.com.br/wp-content/uploads/2022/03/kraftwerk.jpg",
-        }}
-        durationInFrames={Math.round(16 * fps)}
+        id="FourFacesFadeInWithIntro"
+        component={FourFacesFadeInWithIntro}
         fps={fps}
         width={1080}
         height={1080}
+        durationInFrames={durationInSecondsFFFIWI * fps}
+        defaultProps={defaultPropsFFFIWI}
       />
-
       <Composition
-        id="Template3"
-        component={Template3}
-        defaultProps={{
-          audio: "https://www.triceratops.show/episodios/episodio-32.mp3",
-          startAudioFrom: fps * 800,
-          cover: "https://www.triceratops.show/episodios/episodio-32.jpg",
-          title: "#32 Um Tributo Brasileiro ao Kraftwerk",
-          subtitles: ep30subtitles,
-        }}
-        durationInFrames={Math.round(30 * fps)}
+        id="ImgWithAudio"
+        component={ImgWithAudio}
+        fps={fps}
+        width={1080}
+        height={1920}
+        durationInFrames={durationInSecondsImgWithAudio * fps}
+        defaultProps={defaultPropsImgWithAudio}
+      />
+      <Composition
+        id="VideoWithText"
+        component={VideoWithText}
+        fps={fps}
+        width={1080}
+        height={1920}
+        durationInFrames={durationInSecondsVideoWithText * fps}
+        defaultProps={defaultPropsVideoWithText}
+      />
+      <Composition
+        id="VideoWithCoverCredits"
+        component={VideoWithCoverCredits}
         fps={fps}
         width={1080}
         height={1080}
+        durationInFrames={durationInSecondsVWCC * fps}
+        defaultProps={defaultPropsVWCC}
+      />
+      <Still
+        id="CarouselImg"
+        component={CarouselImg}
+        width={1080}
+        height={1080}
+        defaultProps={defaultPropsCarouselImg}
       />
     </>
   );

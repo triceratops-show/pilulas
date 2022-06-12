@@ -1,3 +1,9 @@
 node_modules
 out
+*.aup3
 *.mp3
+*.webm
+*.webp
+*.jpg
+*.png
+.DS_Store

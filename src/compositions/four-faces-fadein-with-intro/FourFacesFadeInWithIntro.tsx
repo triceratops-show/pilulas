@@ -1,0 +1,124 @@
+import {
+  AbsoluteFill,
+  Sequence,
+  useVideoConfig,
+  Audio,
+  Img,
+  interpolate,
+  spring,
+  useCurrentFrame,
+} from "remotion";
+
+import "../../fonts/comic-zine";
+import { FourFaces } from "../four-faces-fadein/FourFaces";
+import styles from "./FourFacesFadeInWithIntro.module.scss";
+
+export type FourFacesFadeInWithIntroProps = {
+  image: string;
+  audio: string;
+  cover: string;
+
+  /** what timestamp to start the cover animation from, in miliseconds */
+  startCoverAt: number;
+
+  /** what timestamp to start the AUDIO from, in seconds */
+  startAudioFrom: number;
+
+  /** most likely the epidode's title */
+  episodeText: string;
+
+  /** how many seconds should the fade out start from */
+  startFadeOutFromLastNSeconds?: number;
+};
+
+export const FourFacesFadeInWithIntro: React.FC<
+  FourFacesFadeInWithIntroProps
+> = ({
+  image,
+  audio,
+  cover,
+  startCoverAt,
+  startAudioFrom,
+  startFadeOutFromLastNSeconds = 3,
+  episodeText,
+}) => {
+  const { fps, durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
+
+  const opacity = interpolate(
+    frame,
+    [startCoverAt, startCoverAt + fps * 2],
+    [0, 1]
+  );
+
+  const progressCover = spring({
+    frame: frame - startCoverAt,
+    fps,
+    from: 0,
+    to: 0.8,
+    config: {
+      mass: 2.5,
+      damping: 1000,
+    },
+  });
+
+  const textFor = fps * 3;
+  const volume = interpolate(
+    frame,
+    [
+      0,
+      textFor,
+      durationInFrames - fps * startFadeOutFromLastNSeconds,
+      durationInFrames,
+    ],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }
+  );
+
+  return (
+    <AbsoluteFill>
+      <Audio src={audio} startFrom={startAudioFrom} volume={volume} />
+
+      <div className={styles.blackBackground}></div>
+
+      <Sequence name="Intro" durationInFrames={textFor / 2} from={0}>
+        <div className={styles.thisWeekWrapper}>
+          <h1 className={styles.thisWeek}>
+            Essa semana em tricerátops show...
+          </h1>
+        </div>
+      </Sequence>
+
+      <Sequence
+        name="Episode Title"
+        durationInFrames={textFor}
+        from={textFor / 2}
+      >
+        <div className={styles.thisWeekWrapper}>
+          <h1 className={styles.thisWeek}>{episodeText}</h1>
+        </div>
+      </Sequence>
+
+      <Sequence
+        name="FourFaces"
+        durationInFrames={Infinity}
+        from={textFor + textFor / 2}
+      >
+        <FourFaces image={image} />
+      </Sequence>
+
+      <Sequence name="Cover" durationInFrames={Infinity} from={startCoverAt}>
+        <Img
+          src={cover}
+          style={{
+            opacity,
+            transform: `scale(${progressCover})`,
+          }}
+        />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};

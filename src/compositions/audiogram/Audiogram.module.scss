@@ -1,0 +1,17 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+  background: white;
+}
+
+.gridImg {
+  position: absolute;
+  z-index: 1;
+}
+
+.audioVizWrapper {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%) scaleX(-51%);
+}

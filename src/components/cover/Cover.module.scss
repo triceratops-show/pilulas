@@ -1,0 +1,40 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  padding: 2rem 1.5rem;
+
+  &[data-font="joan"] {
+    font-family: 'Joan', sans-serif;
+  }
+
+  &[data-font="walrus"] {
+    font-family: 'Walrus', sans-serif;
+  }
+}
+
+.title, .subtitle, .caption, .overline {
+  color: black;
+}
+
+.titleText, .subtitleText, .captionText, .overlineText {
+  background-color: white;
+}

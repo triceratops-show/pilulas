@@ -1,0 +1,64 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &[data-preset="walrus"] {
+    font-family: 'Walrus', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem 1.5rem;
+  
+    h1 {
+      span {
+        background-color: white;
+        padding: 0.125rem;
+        font-size: 0.875rem;
+      }
+    }
+  
+    h2 {
+      display: inline;
+  
+      span {
+        background-color: #51ab82;
+        padding: 0.125rem;
+        font-size: 1.5rem;
+      }
+    }
+  
+    h3 {
+      display: inline;
+  
+      span {
+        background-color: #6b5186;
+        padding: 0.125rem;
+        font-size: 0.75rem;
+        color: white;
+      }
+    }
+
+    h4 {
+      span {
+        color: #6b5186;
+        padding: 0.125rem;
+        font-size: 0.7rem;
+        background-color: white;
+      }
+    }
+  }
+}
