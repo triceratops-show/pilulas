@@ -1,9 +1,13 @@
-import { Composition, staticFile } from "remotion";
+import {
+  Composition,
+  // staticFile,
+} from "remotion";
 import "./style.css";
 import { AudiogramaComposition } from "./audiograma/Audiograma";
 import { CapaFourFacesComposition } from "./capa-four-faces/CapaFourFaces";
 import { PilulaComImagemComposition } from "./pilula-com-imagem/PilulaComImagem";
-import { QualEAMusicaComposition } from "./qual-e-a-musica/QualEAMusica";
+// import { QualEAMusicaComposition } from "./qual-e-a-musica/QualEAMusica";
+import { StoriesComposition } from "./stories/Stories";
 import { Template2Composition } from "./template-2/Template2";
 import { Template3Composition } from "./template-3/Template3";
 
@@ -20,6 +24,14 @@ export const RemotionVideo: React.FC = () => {
   return (
     <>
       <Composition
+        id="Stories"
+        component={StoriesComposition}
+        durationInFrames={durationInFrames}
+        fps={fps}
+        width={1080}
+        height={1920}
+      />
+      {/* <Composition
         id="Audiograma"
         component={AudiogramaComposition}
         durationInFrames={durationInFrames}
@@ -52,7 +64,7 @@ export const RemotionVideo: React.FC = () => {
         fps={fps}
         width={1080}
         height={1080}
-      />
+      /> */}
       {/* <Composition
         id="QualEAMusica"
         component={QualEAMusicaComposition}
@@ -65,7 +77,7 @@ export const RemotionVideo: React.FC = () => {
           startAudioFrom: fps * 0,
         }}
       /> */}
-      <Composition
+      {/* <Composition
         id="Template2"
         component={Template2Composition}
         defaultProps={{
@@ -96,7 +108,7 @@ export const RemotionVideo: React.FC = () => {
         fps={fps}
         width={1080}
         height={1080}
-      />
+      /> */}
     </>
   );
 };
