@@ -8,6 +8,7 @@ import { CapaFourFacesComposition } from "./capa-four-faces/CapaFourFaces";
 import { PilulaComImagemComposition } from "./pilula-com-imagem/PilulaComImagem";
 // import { QualEAMusicaComposition } from "./qual-e-a-musica/QualEAMusica";
 import { ReelsComposition } from "./reels/Reels";
+import { ReelsVideoComposition } from "./reels-video/ReelsVideo";
 import { StoriesComposition } from "./stories/Stories";
 import { Template2Composition } from "./template-2/Template2";
 import { Template3Composition } from "./template-3/Template3";
@@ -19,12 +20,20 @@ import ep30subtitles from "./assets/episodio-30/pilula-3.srt";
 //import ep31image from "./assets/episodio-31/justine1.jpg";
 
 const fps = 30;
-const durationInFrames = 54 * fps;
+const durationInFrames = 90 * fps;
 
 export const RemotionVideo: React.FC = () => {
   return (
     <>
       <Composition
+        id="ReelsVideo"
+        component={ReelsVideoComposition}
+        durationInFrames={durationInFrames}
+        fps={fps}
+        width={1080}
+        height={1080}
+      />
+      {/* <Composition
         id="Reels"
         component={ReelsComposition}
         durationInFrames={durationInFrames}
@@ -39,7 +48,7 @@ export const RemotionVideo: React.FC = () => {
         fps={fps}
         width={1080}
         height={1920}
-      />
+      /> */}
       {/* <Composition
         id="Audiograma"
         component={AudiogramaComposition}
@@ -47,7 +56,7 @@ export const RemotionVideo: React.FC = () => {
         fps={fps}
         width={1080}
         height={1080}
-      />
+      /> */}
       <Composition
         id="CapaFourFaces"
         component={CapaFourFacesComposition}
@@ -66,7 +75,7 @@ export const RemotionVideo: React.FC = () => {
         width={1080}
         height={1080}
       />
-      <Composition
+      {/* <Composition
         id="PilulaComImagem"
         component={PilulaComImagemComposition}
         durationInFrames={durationInFrames}

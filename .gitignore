@@ -1,3 +1,6 @@
 node_modules
 out
 *.mp3
+*.webm
+*.webp
+*.jpg

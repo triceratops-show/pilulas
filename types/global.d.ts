@@ -12,6 +12,8 @@ declare module "parse-srt" {
   export default parseSRT;
 }
 
+declare module "*.webp";
+
 declare module "*.srt";
 
 declare module "*.scss";
