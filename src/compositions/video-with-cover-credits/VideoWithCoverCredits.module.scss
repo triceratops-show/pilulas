@@ -17,8 +17,26 @@
   }
 }
 
+.videoCredits {
+  position: absolute;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  // transform: rotate(-90deg);
+  // left: -22.5%;
+  // top: 75%;
+  left: 1%;
+  bottom: 1%;
+}
+
 .hide {
   display: none;
+}
+
+.right {
+  video {
+    object-position: 25%;
+  }
 }
 
 .subtitle {

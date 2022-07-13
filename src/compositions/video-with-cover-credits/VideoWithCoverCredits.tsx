@@ -6,6 +6,7 @@ import {
   Video,
   useCurrentFrame,
   useVideoConfig,
+  interpolate,
 } from "remotion";
 
 import { Cover } from "../../components/cover/Cover";
@@ -23,20 +24,14 @@ import type {
 } from "../../unit-coversion/seconds-to-frames";
 import classes from "./VideoWithCoverCredits.module.scss";
 
-const elements = [
-  "wrapper",
-  "title",
-  "titleText",
-  "caption",
-  "captionText",
-] as const;
+const elements = ["video", "subtitle"] as const;
 
 export type VideoWithCoverCreditsProps = {
-  audio: {
+  audio?: {
     props: AudioPropsInSeconds;
     sequence: SequencePropsInSeconds;
   };
-  subtitles: {
+  subtitles?: {
     src: string;
     sequence: SequencePropsInSeconds;
   };
@@ -45,6 +40,7 @@ export type VideoWithCoverCreditsProps = {
     sequence: SequencePropsInSeconds;
   };
   video: {
+    credits?: string;
     props: VideoPropsInSeconds;
     sequence: SequencePropsInSeconds;
   };
@@ -74,45 +70,69 @@ export const VideoWithCoverCredits = ({
 
   return (
     <>
-      <Sequence
-        name="audio"
-        {...convertSequencePropsToFrames(fps, audio.sequence)}
-      >
-        <Audio {...convertAudioPropsToFrames(fps, audio.props, frame)} />
-      </Sequence>
-      <Sequence
-        name="subtitles"
-        {...convertSequencePropsToFrames(fps, subtitles.sequence)}
-      >
-        <div className={cx(classes.subtitle)}>
-          <PaginatedSubtitles
-            src={subtitles.src}
-            startFrame={0}
-            endFrame={durationInFrames}
-            linesPerPage={4}
-            renderSubtitleItem={(item) => <span>{item.text}</span>}
-          />
-        </div>
-      </Sequence>
-      <Sequence
-        name="cover"
-        {...convertSequencePropsToFrames(fps, cover.sequence)}
-      >
-        <Cover {...cover.props} />
-      </Sequence>
+      {audio && (
+        <Sequence
+          name="audio"
+          {...convertSequencePropsToFrames(fps, audio.sequence)}
+        >
+          <Audio {...convertAudioPropsToFrames(fps, audio.props, frame)} />
+        </Sequence>
+      )}
       <Sequence
         name="video"
         {...convertSequencePropsToFrames(fps, video.sequence)}
       >
         <div
-          className={cx(classes.video, {
+          className={cx(classes.video, classesProp?.video, {
             [classes.hide]:
-              frame < (cover.sequence.durationInSeconds ?? 0) * fps ||
               frame > credits.sequence.fromSeconds * fps,
+            [classes.right]: frame > 20.2 * fps && frame < 29.6 * fps,
           })}
+          style={styles?.video}
         >
+          {video.credits && (
+            <div className={cx(classes.videoCredits)}>{video.credits}</div>
+          )}
           <Video {...convertVideoPropsToFrames(fps, video.props, frame)} />
         </div>
+      </Sequence>
+      {subtitles && (
+        <Sequence
+          name="subtitles"
+          {...convertSequencePropsToFrames(fps, subtitles.sequence)}
+        >
+          <div
+            className={cx(classes.subtitle, classesProp?.subtitle)}
+            style={styles?.subtitle}
+          >
+            <PaginatedSubtitles
+              src={subtitles.src}
+              startFrame={0}
+              endFrame={durationInFrames}
+              linesPerPage={4}
+              renderSubtitleItem={(item) => <span>{item.text}</span>}
+            />
+          </div>
+        </Sequence>
+      )}
+      <Sequence
+        name="cover"
+        {...convertSequencePropsToFrames(fps, cover.sequence)}
+      >
+        <Cover
+          {...cover.props}
+          styles={{
+            ...cover.props.styles,
+            wrapper: {
+              ...cover.props.styles?.wrapper,
+              opacity: interpolate(
+                frame,
+                [((cover.sequence.durationInSeconds ?? 0) - 0.5) * fps, (cover.sequence.durationInSeconds ?? 0) * fps],
+                [1, 0]
+              ),
+            },
+          }}
+        />
       </Sequence>
       <Sequence
         name="credits"
