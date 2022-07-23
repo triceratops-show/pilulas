@@ -22,7 +22,7 @@ export type CoverProps = {
   subtitle?: string;
   caption?: string;
   overline?: string;
-  img: Partial<React.ComponentPropsWithoutRef<typeof Img>>;
+  img?: Partial<React.ComponentPropsWithoutRef<typeof Img>>;
   font?: "none" | "joan" | "walrus";
   classes?: Partial<{
     [k in typeof elements[number]]: string;
@@ -47,7 +47,7 @@ export const Cover = ({
       className={cx(classes.wrapper, classesProp?.wrapper)}
       style={styles?.wrapper}
     >
-      <Img {...img} className={cx(classes.img, img?.className)} />
+      {img && <Img {...img} className={cx(classes.img, img?.className)} />}
       <div
         className={cx(classes.content, classesProp?.content)}
         style={styles?.content}

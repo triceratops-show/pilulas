@@ -16,15 +16,16 @@ import {
   convertAudioPropsToFrames,
   convertSequencePropsToFrames,
   convertVideoPropsToFrames,
-} from "../../unit-coversion/seconds-to-frames";
+} from "../../helpers/seconds-to-frames";
 import type {
   AudioPropsInSeconds,
   SequencePropsInSeconds,
   VideoPropsInSeconds,
-} from "../../unit-coversion/seconds-to-frames";
+} from "../../helpers/seconds-to-frames";
+import { applyStyle } from "../../helpers/style";
 import classes from "./VideoWithCoverCredits.module.scss";
 
-const elements = ["video", "subtitle"] as const;
+const elements = ["video", "videoCredits", "subtitle"] as const;
 
 export type VideoWithCoverCreditsProps = {
   audio?: {
@@ -35,7 +36,7 @@ export type VideoWithCoverCreditsProps = {
     src: string;
     sequence: SequencePropsInSeconds;
   };
-  cover: {
+  cover?: {
     props: React.ComponentPropsWithoutRef<typeof Cover>;
     sequence: SequencePropsInSeconds;
   };
@@ -52,7 +53,9 @@ export type VideoWithCoverCreditsProps = {
     [k in typeof elements[number]]: string;
   }>;
   styles?: Partial<{
-    [k in typeof elements[number]]: React.CSSProperties;
+    [k in typeof elements[number]]:
+      | React.CSSProperties
+      | ((fps: number, frame: number) => React.CSSProperties);
   }>;
 };
 
@@ -83,15 +86,16 @@ export const VideoWithCoverCredits = ({
         {...convertSequencePropsToFrames(fps, video.sequence)}
       >
         <div
-          className={cx(classes.video, classesProp?.video, {
-            [classes.hide]:
-              frame > credits.sequence.fromSeconds * fps,
-            [classes.right]: frame > 20.2 * fps && frame < 29.6 * fps,
-          })}
-          style={styles?.video}
+          className={cx(classes.video, classesProp?.video)}
+          style={applyStyle(styles?.video, fps, frame)}
         >
           {video.credits && (
-            <div className={cx(classes.videoCredits)}>{video.credits}</div>
+            <div
+              className={cx(classes.videoCredits, classesProp?.videoCredits)}
+              style={applyStyle(styles?.videoCredits, fps, frame)}
+            >
+              {video.credits}
+            </div>
           )}
           <Video {...convertVideoPropsToFrames(fps, video.props, frame)} />
         </div>
@@ -103,7 +107,7 @@ export const VideoWithCoverCredits = ({
         >
           <div
             className={cx(classes.subtitle, classesProp?.subtitle)}
-            style={styles?.subtitle}
+            style={applyStyle(styles?.subtitle, fps, frame)}
           >
             <PaginatedSubtitles
               src={subtitles.src}
@@ -115,25 +119,30 @@ export const VideoWithCoverCredits = ({
           </div>
         </Sequence>
       )}
-      <Sequence
-        name="cover"
-        {...convertSequencePropsToFrames(fps, cover.sequence)}
-      >
-        <Cover
-          {...cover.props}
-          styles={{
-            ...cover.props.styles,
-            wrapper: {
-              ...cover.props.styles?.wrapper,
-              opacity: interpolate(
-                frame,
-                [((cover.sequence.durationInSeconds ?? 0) - 0.5) * fps, (cover.sequence.durationInSeconds ?? 0) * fps],
-                [1, 0]
-              ),
-            },
-          }}
-        />
-      </Sequence>
+      {cover && (
+        <Sequence
+          name="cover"
+          {...convertSequencePropsToFrames(fps, cover.sequence)}
+        >
+          <Cover
+            {...cover.props}
+            styles={{
+              ...cover.props.styles,
+              wrapper: {
+                ...cover.props.styles?.wrapper,
+                opacity: interpolate(
+                  frame,
+                  [
+                    ((cover.sequence.durationInSeconds ?? 0) - 0.5) * fps,
+                    (cover.sequence.durationInSeconds ?? 0) * fps,
+                  ],
+                  [1, 0]
+                ),
+              },
+            }}
+          />
+        </Sequence>
+      )}
       <Sequence
         name="credits"
         {...convertSequencePropsToFrames(fps, credits.sequence)}

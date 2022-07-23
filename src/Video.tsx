@@ -55,6 +55,8 @@ import { defaultProps as defaultPropsCarouselImg } from "./components/carousel-i
 
 import { TheMonks } from "./parameters/episodio-43/TheMonks";
 
+import { TheStrokes, durationInSeconds } from "./parameters/dia-do-rock/TheStrokes";
+
 const fps = 30;
 
 export const RemotionVideo: React.FC = () => {
@@ -139,7 +141,7 @@ export const RemotionVideo: React.FC = () => {
         height={1080}
         defaultProps={defaultPropsCarouselImg}
       /> */}
-      <Composition
+      {/* <Composition
         id="TheMonks"
         component={TheMonks}
         width={1200}
@@ -147,6 +149,14 @@ export const RemotionVideo: React.FC = () => {
         fps={fps}
         durationInFrames={58.1 * fps}
       />
+      <Composition
+        id="TheStrokes"
+        component={TheStrokes}
+        width={1080}
+        height={1920}
+        fps={fps}
+        durationInFrames={durationInSeconds * fps}
+      /> */}
     </>
   );
 };

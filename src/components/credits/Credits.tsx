@@ -4,7 +4,7 @@ import { Img } from "remotion";
 
 import classes from "./Credits.module.scss";
 
-const elements = ["wrapper", "content", "title", "social"] as const;
+const elements = ["wrapper", "content", "title", "subtitle", "social"] as const;
 
 export type CreditsProps = {
   episode: {
@@ -48,6 +48,13 @@ export const Credits = ({
           style={styles?.title}
         >
           {episode.title}
+        </div>
+        <div
+          className={cx(classes.subtitle, classesProp?.subtitle)}
+          style={styles?.subtitle}
+        >
+          Tricerátops Show<br />
+          podcast de música alternativa
         </div>
         <div
           className={cx(classes.social, classesProp?.social)}
