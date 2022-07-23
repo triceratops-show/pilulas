@@ -58,7 +58,7 @@ export const PaginatedSubtitles: React.FC<PaginatedSubtitlesProps> = ({
   const currentSubtitleItem = subtitles
     .slice()
     .reverse()
-    .find((item) => item.start < frame);
+    .find((item) => item.start <= frame);
 
   if (!currentSubtitleItem) {
     return null;

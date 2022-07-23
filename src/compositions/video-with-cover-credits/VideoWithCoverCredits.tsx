@@ -6,9 +6,9 @@ import {
   Video,
   useCurrentFrame,
   useVideoConfig,
-  interpolate,
 } from "remotion";
 
+import { AudioViz } from "../../components/audio-viz/AudioViz";
 import { Cover } from "../../components/cover/Cover";
 import { Credits } from "../../components/credits/Credits";
 import { PaginatedSubtitles } from "../../components/subtitles/PaginatedSubtitles";
@@ -25,7 +25,12 @@ import type {
 import { applyStyle } from "../../helpers/style";
 import classes from "./VideoWithCoverCredits.module.scss";
 
-const elements = ["video", "videoCredits", "subtitle"] as const;
+const elements = [
+  "video",
+  "videoCredits",
+  "audioVizWrapper",
+  "subtitle",
+] as const;
 
 export type VideoWithCoverCreditsProps = {
   audio?: {
@@ -40,12 +45,16 @@ export type VideoWithCoverCreditsProps = {
     props: React.ComponentPropsWithoutRef<typeof Cover>;
     sequence: SequencePropsInSeconds;
   };
-  video: {
+  video?: {
     credits?: string;
     props: VideoPropsInSeconds;
     sequence: SequencePropsInSeconds;
   };
-  credits: {
+  audioviz?: {
+    props: React.ComponentPropsWithoutRef<typeof AudioViz>;
+    sequence: SequencePropsInSeconds;
+  };
+  credits?: {
     props: React.ComponentPropsWithoutRef<typeof Credits>;
     sequence: SequencePropsInSeconds;
   };
@@ -64,6 +73,7 @@ export const VideoWithCoverCredits = ({
   subtitles,
   cover,
   video,
+  audioviz,
   credits,
   classes: classesProp,
   styles,
@@ -81,25 +91,27 @@ export const VideoWithCoverCredits = ({
           <Audio {...convertAudioPropsToFrames(fps, audio.props, frame)} />
         </Sequence>
       )}
-      <Sequence
-        name="video"
-        {...convertSequencePropsToFrames(fps, video.sequence)}
-      >
-        <div
-          className={cx(classes.video, classesProp?.video)}
-          style={applyStyle(styles?.video, fps, frame)}
+      {video && (
+        <Sequence
+          name="video"
+          {...convertSequencePropsToFrames(fps, video.sequence)}
         >
-          {video.credits && (
-            <div
-              className={cx(classes.videoCredits, classesProp?.videoCredits)}
-              style={applyStyle(styles?.videoCredits, fps, frame)}
-            >
-              {video.credits}
-            </div>
-          )}
-          <Video {...convertVideoPropsToFrames(fps, video.props, frame)} />
-        </div>
-      </Sequence>
+          <div
+            className={cx(classes.video, classesProp?.video)}
+            style={applyStyle(styles?.video, fps, frame)}
+          >
+            {video.credits && (
+              <div
+                className={cx(classes.videoCredits, classesProp?.videoCredits)}
+                style={applyStyle(styles?.videoCredits, fps, frame)}
+              >
+                {video.credits}
+              </div>
+            )}
+            <Video {...convertVideoPropsToFrames(fps, video.props, frame)} />
+          </div>
+        </Sequence>
+      )}
       {subtitles && (
         <Sequence
           name="subtitles"
@@ -124,31 +136,33 @@ export const VideoWithCoverCredits = ({
           name="cover"
           {...convertSequencePropsToFrames(fps, cover.sequence)}
         >
-          <Cover
-            {...cover.props}
-            styles={{
-              ...cover.props.styles,
-              wrapper: {
-                ...cover.props.styles?.wrapper,
-                opacity: interpolate(
-                  frame,
-                  [
-                    ((cover.sequence.durationInSeconds ?? 0) - 0.5) * fps,
-                    (cover.sequence.durationInSeconds ?? 0) * fps,
-                  ],
-                  [1, 0]
-                ),
-              },
-            }}
-          />
+          <Cover {...cover.props} />
         </Sequence>
       )}
-      <Sequence
-        name="credits"
-        {...convertSequencePropsToFrames(fps, credits.sequence)}
-      >
-        <Credits {...credits.props} />
-      </Sequence>
+      {audioviz && (
+        <Sequence
+          name="audioviz"
+          {...convertSequencePropsToFrames(fps, audioviz.sequence)}
+        >
+          <div
+            className={cx(
+              classes.audioVizWrapper,
+              classesProp?.audioVizWrapper
+            )}
+            style={applyStyle(styles?.audioVizWrapper, fps, frame)}
+          >
+            <AudioViz {...audioviz.props} />
+          </div>
+        </Sequence>
+      )}
+      {credits && (
+        <Sequence
+          name="credits"
+          {...convertSequencePropsToFrames(fps, credits.sequence)}
+        >
+          <Credits {...credits.props} />
+        </Sequence>
+      )}
     </>
   );
 };

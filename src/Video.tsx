@@ -55,7 +55,9 @@ import { defaultProps as defaultPropsCarouselImg } from "./components/carousel-i
 
 import { TheMonks } from "./parameters/episodio-43/TheMonks";
 
-import { TheStrokes, durationInSeconds } from "./parameters/dia-do-rock/TheStrokes";
+// import { TheStrokes, durationInSeconds } from "./parameters/dia-do-rock/TheStrokes";
+
+import { Meditacao, durationInSeconds } from "./parameters/episodio-47/Meditacao";
 
 const fps = 30;
 
@@ -157,6 +159,14 @@ export const RemotionVideo: React.FC = () => {
         fps={fps}
         durationInFrames={durationInSeconds * fps}
       /> */}
+      <Composition
+        id="Meditacao"
+        component={Meditacao}
+        width={1080}
+        height={1080}
+        fps={fps}
+        durationInFrames={durationInSeconds * fps}
+      />
     </>
   );
 };

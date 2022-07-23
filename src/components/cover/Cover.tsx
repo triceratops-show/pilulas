@@ -18,7 +18,7 @@ const elements = [
 ] as const;
 
 export type CoverProps = {
-  title: string;
+  title?: string;
   subtitle?: string;
   caption?: string;
   overline?: string;
@@ -61,12 +61,14 @@ export const Cover = ({
             <span style={styles?.overlineText}>{overline}</span>
           </div>
         )}
-        <div
-          className={cx(classes.title, classesProp?.title)}
-          style={styles?.title}
-        >
-          <span style={styles?.titleText}>{title}</span>
-        </div>
+        {title && (
+          <div
+            className={cx(classes.title, classesProp?.title)}
+            style={styles?.title}
+          >
+            <span style={styles?.titleText}>{title}</span>
+          </div>
+        )}
         {subtitle && (
           <div
             className={cx(classes.subtitle, classesProp?.subtitle)}
