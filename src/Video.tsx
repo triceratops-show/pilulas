@@ -57,7 +57,9 @@ import { TheMonks } from "./parameters/episodio-43/TheMonks";
 
 // import { TheStrokes, durationInSeconds } from "./parameters/dia-do-rock/TheStrokes";
 
-import { Meditacao, durationInSeconds } from "./parameters/episodio-47/Meditacao";
+// import { Meditacao, durationInSeconds } from "./parameters/episodio-47/Meditacao";
+
+import { Teaser, durationInSeconds } from "./parameters/episodio-47/Teaser";
 
 const fps = 30;
 
@@ -160,10 +162,10 @@ export const RemotionVideo: React.FC = () => {
         durationInFrames={durationInSeconds * fps}
       /> */}
       <Composition
-        id="Meditacao"
-        component={Meditacao}
+        id="Teaser"
+        component={Teaser}
         width={1080}
-        height={1080}
+        height={1920}
         fps={fps}
         durationInFrames={durationInSeconds * fps}
       />
